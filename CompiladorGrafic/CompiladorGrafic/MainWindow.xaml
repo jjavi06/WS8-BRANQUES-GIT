@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Label x:Name="t1_lbl_expresion" Content="EXPRESIÓN:" HorizontalAlignment="Left" Margin="180,56,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <TextBox x:Name="t1_tbox_expresion" HorizontalAlignment="Center" Margin="0,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Height="33"/>
+        <Button x:Name="t1_btn_validar" Content="Validar" HorizontalAlignment="Left" Margin="519,59,0,0" VerticalAlignment="Top" FontSize="20"/>
 
     </Grid>
 </Window>
