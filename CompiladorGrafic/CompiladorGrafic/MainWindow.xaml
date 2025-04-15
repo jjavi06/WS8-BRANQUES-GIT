@@ -18,7 +18,7 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="t1_btn_SelectDoc" Content="Seleccionar Archivo" HorizontalAlignment="Left" Margin="328,62,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="t1_btn_SelectDoc" Content="Seleccionar Archivo" HorizontalAlignment="Left" Margin="328,62,0,0" VerticalAlignment="Top" Click="t1_btn_SelectDoc_Click"/>
 
     </Grid>
 </Window>
