@@ -77,24 +77,87 @@ namespace CompiladorGrafic
             return coinciden;
         }
         /// <summary>
+        /// Coge la estructura de la expresión creada por el método EstructuraNotPolaca y con ella resuelve la operación. 
+        /// Mientras que en la lista de estructura queda mas de un elemento, va resolviendo. Guarda 3 variables con 3 posiciones consecutivas
+        /// de la lista, si la última posición de las guardadas contiene un operador, pasa al siguiente paso que es eliminar
+        /// estos 3 elementos seleccionados, resolver la operación entre los dos números y el operador con el método Operación y añade el
+        /// resultado a la lista para poder seguir resolviendo la expresión.
+        /// </summary>
+        /// <param name="expresion"></param>
+        /// <returns></returns>
+        public int Resolver(string expresion)
+        {
+            if (!Validar(expresion)) throw new Exception("La excepción no es válida.");
+            List<string> estructura = EstructuraNotPolaca(expresion);
+            string ant1 = "", ant2 = "", act;
+            int pos = -1, operacion, totalResult;
+            act = estructura[0];
+            while (estructura.Count > 1)
+            {
+                while (act != "+" && act != "-" && act != "/" && act != "*")
+                {
+                    pos++;
+                    ant1 = estructura[pos];
+                    ant2 = estructura[pos + 1];
+                    act = estructura[pos + 2];
+                }
+                estructura.RemoveAt(pos);
+                estructura.RemoveAt(pos);
+                estructura.RemoveAt(pos);
+                operacion = Operacion(Convert.ToInt32(ant1), Convert.ToInt32(ant2), act);
+                estructura.Insert(pos, operacion.ToString());
+                pos = -1;
+                act = estructura[0];
+            }
+            totalResult = Convert.ToInt32(estructura[0]);
+            return totalResult;
+        }
+        /// <summary>
+        /// Según el operador, hace una operación u otra y devuelve el resultado.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="op"></param>
+        /// <returns></returns>
+        private int Operacion(int a, int b, string op)
+        {
+            int result = 0;
+            switch (op)
+            {
+                case "+":
+                    result = a + b;
+                    break;
+                case "-":
+                    result = a - b;
+                    break;
+                case "*":
+                    result = a * b;
+                    break;
+                case "/":
+                    result = a / b;
+                    break;
+            }
+            return result;
+        }
+        /// <summary>
         /// Define la estructura de la expresión en Notación Polaca Inversa usando el método Desapilar para determinar la prioridad 
         /// de los operadores. En caso de encontrar un número en la expresión lo añade directamente a la tablaLista salida y en caso de
         /// ser un operador apila en operadores o desapila en salida según su prioridad.
         /// </summary>
         /// <param name="expresion"></param>
         /// <returns></returns>
-        public TaulaLlista<char> EstructuraNotPolaca(string expresion)
+        private List<string> EstructuraNotPolaca(string expresion)
         {
             expresion = expresion.Replace(" ", "");
             Pila<char> operadores = new Pila<char>(expresion.Length);
-            TaulaLlista<char> salida = new TaulaLlista<char>(expresion.Length);
+            List<string> salida = new List<string>(expresion.Length);
             int i = 0, desapilar;
             char c;
             while (i < expresion.Length)
             {
                 c = expresion[i++];
                 if (char.IsDigit(c))
-                    salida.Add(c);
+                    salida.Add(c.ToString());
                 else
                 {
                     if (!operadores.IsEmpty)
@@ -102,9 +165,9 @@ namespace CompiladorGrafic
                         desapilar = Desapilar(operadores.Peek(), c);
                         if (desapilar == 1)
                         {
-                            salida.Add(operadores.Pop());
+                            salida.Add(operadores.Pop().ToString());
                             if (!operadores.IsEmpty && Desapilar(operadores.Peek(), c) == 1)
-                                salida.Add(operadores.Pop());
+                                salida.Add(operadores.Pop().ToString());
                             operadores.Add(c);
                         }
                         else if (desapilar == 2)
@@ -112,7 +175,7 @@ namespace CompiladorGrafic
                             char pop = operadores.Pop();
                             while (pop != '(' && pop != '[' && pop != '{')
                             {
-                                salida.Add(pop);
+                                salida.Add(pop.ToString());
                                 pop = operadores.Pop();
                             }
                         }
@@ -124,7 +187,7 @@ namespace CompiladorGrafic
                 }
             }
             while (!operadores.IsEmpty)
-                salida.Add(operadores.Pop());
+                salida.Add(operadores.Pop().ToString());
             return salida;
         }
         /// <summary>
