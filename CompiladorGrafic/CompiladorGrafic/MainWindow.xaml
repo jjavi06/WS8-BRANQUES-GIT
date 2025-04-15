@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Label x:Name="t1_lbl_expresion" Content="EXPRESIÓN:" HorizontalAlignment="Left" Margin="200,24,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="t1_tbox_expresion" HorizontalAlignment="Left" Margin="289,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="184" Height="24" FontSize="14"/>
+        <Button x:Name="t1_btn_validar" Content="Validar" HorizontalAlignment="Left" Margin="491,27,0,0" VerticalAlignment="Top" FontSize="14" Click="t1_btn_validar_Click"/>
+        <DataGrid x:Name="t1_dg_datos" Margin="0,87,0,0" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Expressión" Binding="{Binding Expresion}" Width="*" />
+                <DataGridTextColumn Header="Validación" Binding="{Binding Validacion}" Width="100" />
+                <DataGridTextColumn Header="Resultado" Binding="{Binding Resultado}" Width="120" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="t1_btn_SelectDoc" Content="Seleccionar Archivo" HorizontalAlignment="Left" Margin="328,62,0,0" VerticalAlignment="Top" Click="t1_btn_SelectDoc_Click"/>
 
     </Grid>
 </Window>
