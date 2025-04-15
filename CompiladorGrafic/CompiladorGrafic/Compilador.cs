@@ -48,7 +48,7 @@ namespace CompiladorGrafic
                     if (!elementos.IsEmpty)
                     {
                         abierto = elementos.Peek();
-                        if (!Coinciden(actual, abierto))
+                        if (!Coinciden(abierto, actual))
                             valido = false;
                         else elementos.Pop();
                     }
